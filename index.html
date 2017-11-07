@@ -83,11 +83,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h1><p>线性回归是一种监督学习方法，可以被用来解决回归问题。它用一条直线或高维空间中的平面来拟合训练数据，进而对未知数据进行预测。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_1.jpg" alt="linear regression"></p>
+<h1 id="基本套路"><a href="#基本套路" class="headerlink" title="基本套路"></a>基本套路</h1><p>这里介绍一下机器学习方法的基本套路：模型，代价函数，优化方法。<br>首先你得设计一个模型用于预测未知世界，然后针对这个模型要确定一个代价函数（cost function），这里代价函数就是我们常提的损失函数，英文学名loss function。损失函数越小，就表示模型拟合的越好。所以损失函数或代价函数是用来度量拟合程度的。<br>最后使用优化方法（optimization approach）在已有的样本数据上不断地优化模型参数。用的最多的优化算法主要是梯度下降。计算过程都需要计算参数梯度值。</p>
+<h2 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h2><p><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_2.jpg" alt="basis model"><br>X表示样本特征，为n维向量，\theta为模型参数，为n+1维向量，包括一个偏置\theta_0</p>
+<h2 id="代价函数"><a href="#代价函数" class="headerlink" title="代价函数"></a>代价函数</h2><p><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_3.jpg" alt="cost function"><br>这个公式也叫做平方误差，m为样本个数，{X^(i),y^(i)}为第i个样本。</p>
+<h2 id="参数梯度"><a href="#参数梯度" class="headerlink" title="参数梯度"></a>参数梯度</h2><p><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_4.jpg" alt="parameter gradient"><br>上述公式中，\theta_j表示第j个参数，X_j^(i)表示样本X^(i)的第j个特征值。</p>
+<p>线性回归问题是可解的，只是当样本维度较大的时候很难求解才使用优化迭代的方法来逼近。如果样本维度不是很大的情况下，是可以解方程一次性得到样本参数，就像我们本科线性代数里学的那个样。</p>
+<h2 id="最小二乘"><a href="#最小二乘" class="headerlink" title="最小二乘"></a>最小二乘</h2><p><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_5.jpg" alt="least square method"><br>这里的X是一个m\times n矩阵，n为特征维度，m为样本个数；y为m\times 1向量，表示每个样本的标签。</p>
+<h2 id="加权最小二乘"><a href="#加权最小二乘" class="headerlink" title="加权最小二乘"></a>加权最小二乘</h2><p><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_6.jpg" alt="weighted least square method"><br>W为m\times m对角矩阵，对角线上的每个值表示对应样本的实例的权重。</p>
+<h1 id="应用套路"><a href="#应用套路" class="headerlink" title="应用套路"></a>应用套路</h1><p>在实际应用中，在基本套路上会有一些小变化。下面从模型、代价函数以及参数梯度来描述。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_7.jpg" alt="practical model"></p>
+<h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><p>为了防止过拟合，一般会在代价函数上增加正则项，常见的正则方法有：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_8.jpg" alt="regularization方法"></p>
+<p>加上正则项后，代价函数编程如下形式：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_9.jpg" alt="cost function with regularization"><br>\lambda 为正则项系数，\alpha为ElasticNet参数，他们都是可调整的超参数。ElasticNet 是一种使用L1和L2先验作为正则化矩阵的线性回归模型.这种组合用于只有很少的权重非零的稀疏模型，比如:class:Lasso, 但是又能保持:class:Ridge 的正则化属性.我们可以使用 l1_ratio 参数来调节L1和L2的凸组合(一类特殊的线性组合)。<br>当\alpha=0时，则为L2正则；当\alpha=1时，则为L1正则。L1正则项增加1/m以及L2正则项增加1/2m系数，仅仅是为了求导后的形式规整一些。</p>
+<p>由于L1正则项不可导，如果\alpha不为0，那么不能简单的套用梯度下降或 L-BFGS，需要采用借助软阈值(Soft Thresholding)函数解决，如果是使用拟牛顿法，可以采用OWL-QN，它是基于L-BFGS算法的可用于求解L1正则的算法。基于上述代价函数，下面仅列出包含L2正则项时的参数梯度：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_10.jpg" alt="parameter gradient with L2"><br>带星号的\theta_j为上一次迭代得到的参数值。</p>
+<p>In fact，使用L2正则，是将前面所述的最小二乘方程改成如下形式：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_11.jpg" alt="改写形式"></p>
+<h2 id="标准化"><a href="#标准化" class="headerlink" title="标准化"></a>标准化</h2><p>一般来说，一个特征的值可能在区间 (0,1)之间，另一特征的值可能在区间(−∞,∞)，这就是所谓的样本特征之间量纲不同，这样会导致优化迭代过程中的不稳定。</p>
+<p>当参数有不同初始值时，其收敛速度差异性较大，得到的结果可能也有较大的差异性，如下图所示，可以看到X和Y这两个变量的变化幅度不一致，如果直接使用梯度下降来优化迭代，那么量纲较大的特征信息量会被放大，量纲较小的特征信息量会被缩小。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_12.jpg" alt=""></p>
+<p>所以一般要对数据作无量纲化处理，通常会采用标准化方法 (x−u)/\sigma，得到如下数据分布，这样无论从哪个点开始，其迭代方向的抖动都不会太大，每个特征的信息也不至于被放大和缩小。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/linear_regression_13.jpg" alt=""></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>线性回归很少用于解决实际问题，但很适合对机器学习的入门。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/06/线性回归/" data-id="cj9o9bdza00021guxi8mxjqk1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/06/线性回归/" data-id="cj9p3ugwv0001ywuxz9ngk5mb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -130,7 +147,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/01/LaTex-算法模板/" data-id="cj9o9bdz500001gux5x2hsspq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/01/LaTex-算法模板/" data-id="cj9p3ugwq0000ywuxhbsokzok" class="article-share-link">Share</a>
       
       
     </footer>
@@ -190,7 +207,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/27/OneHot-Encoding/" data-id="cj9o9bdz900011guxxr6zsiot" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/27/OneHot-Encoding/" data-id="cj9p3ugwx0002ywuxek1d8vte" class="article-share-link">Share</a>
       
       
     </footer>
@@ -235,7 +252,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/27/hello-world/" data-id="cj9o9bdzk00031guxl8wifvks" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/27/hello-world/" data-id="cj9p3ugxf0003ywuxdjy1n5hx" class="article-share-link">Share</a>
       
       
     </footer>
