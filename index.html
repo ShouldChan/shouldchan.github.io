@@ -61,6 +61,52 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-奇异值分解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/07/奇异值分解/" class="article-date">
+  <time datetime="2017-11-07T12:08:39.000Z" itemprop="datePublished">2017-11-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/07/奇异值分解/">奇异值分解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>奇异值分解（Singular Value Decomposition，SVD）是矩阵分解的一种，是一种具有物理意义的方法。任意矩阵都可以进行奇异值分解。</p>
+<h1 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h1><p>假设存在一个m\times n的矩阵A，A将n维空间中的向量映射到k（k&lt;=m）空间中，k=Rank(A)，即矩阵A的秩。</p>
+<p>设n维空间中有一组满足经A变换后还是正交的正交基：<br><img src="" alt=""></p>
+<p>则A矩阵将这组基映射为：<br><img src="" alt=""></p>
+<p>使他们两两正交，则<br><img src="" alt=""></p>
+<p>令下式=0<br><img src="" alt=""></p>
+<p>如果正交基v选A^TA的特征向量，因为A^TA是对称阵，v之间两两正交，那么<br><img src="" alt=""></p>
+<p>这样就找到了正交基并且映射后还是正交基，将映射后的正交基单位化：<br>因为<br><img src="" alt=""></p>
+<p>所以<br><img src="" alt=""></p>
+<h2 id="这里插播一条性质："><a href="#这里插播一条性质：" class="headerlink" title="这里插播一条性质："></a>这里插播一条性质：</h2><p>if i等于j, v_i\cdot v_j = 1;<br>else if i不等于j, v_i\cdot v_j = 0。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/07/奇异值分解/" data-id="cj9r2si6k0001i8ux0dthea12" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-线性回归" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/11/06/线性回归/" class="article-date">
@@ -104,7 +150,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/06/线性回归/" data-id="cj9p3ugwv0001ywuxz9ngk5mb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/06/线性回归/" data-id="cj9r2si7g0004i8uxaz3u0955" class="article-share-link">Share</a>
       
       
     </footer>
@@ -147,7 +193,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/01/LaTex-算法模板/" data-id="cj9p3ugwq0000ywuxhbsokzok" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/01/LaTex-算法模板/" data-id="cj9r2si6g0000i8uxt9j58lo5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -207,7 +253,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/27/OneHot-Encoding/" data-id="cj9p3ugwx0002ywuxek1d8vte" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/27/OneHot-Encoding/" data-id="cj9r2si6r0003i8uxjs5cb61z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -252,7 +298,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/27/hello-world/" data-id="cj9p3ugxf0003ywuxdjy1n5hx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/27/hello-world/" data-id="cj9r2si6p0002i8uxhnwjpd0i" class="article-share-link">Share</a>
       
       
     </footer>
@@ -290,6 +336,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/11/07/奇异值分解/">奇异值分解</a>
+          </li>
         
           <li>
             <a href="/2017/11/06/线性回归/">线性回归</a>
