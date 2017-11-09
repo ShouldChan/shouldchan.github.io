@@ -48,9 +48,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -85,29 +85,29 @@
       
         <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>奇异值分解（Singular Value Decomposition，SVD）是矩阵分解的一种，是一种具有物理意义的方法。任意矩阵都可以进行奇异值分解。</p>
 <h1 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h1><p>假设存在一个m\times n的矩阵A，A将n维空间中的向量映射到k（k&lt;=m）空间中，k=Rank(A)，即矩阵A的秩。</p>
-<p>设n维空间中有一组满足经A变换后还是正交的正交基：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_1.jpg" alt=""></p>
-<p>则A矩阵将这组基映射为：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_2.jpg" alt=""></p>
-<p>使他们两两正交，则<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_3.jpg" alt=""></p>
-<p>令下式=0<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_4.jpg" alt=""></p>
-<p>如果正交基v选A^TA的特征向量，因为A^TA是对称阵，v之间两两正交，那么<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_5.jpg" alt=""></p>
-<p>这样就找到了正交基并且映射后还是正交基，将映射后的正交基单位化：<br>因为<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_6.jpg" alt=""></p>
-<p>所以<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_7.jpg" alt=""></p>
+<p>设n维空间中有一组满足经A变换后还是正交的正交基：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_1.jpg" alt="1"></p>
+<p>则A矩阵将这组基映射为：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_2.jpg" alt="2"></p>
+<p>使他们两两正交，则<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_3.jpg" alt="3"></p>
+<p>令下式=0<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_4.jpg" alt="4"></p>
+<p>如果正交基v选A^TA的特征向量，因为A^TA是对称阵，v之间两两正交，那么<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_5.jpg" alt="5"></p>
+<p>这样就找到了正交基并且映射后还是正交基，将映射后的正交基单位化：<br>因为<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_6.jpg" alt="6"></p>
+<p>所以<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_7.jpg" alt="7"></p>
 <h2 id="这里插播一条性质："><a href="#这里插播一条性质：" class="headerlink" title="这里插播一条性质："></a>这里插播一条性质：</h2><p>if i等于j, v_i\cdot v_j = 1;<br>else if i不等于j, v_i\cdot v_j = 0。</p>
-<p>所以取单位向量<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_8.jpg" alt=""></p>
-<p>由此可得<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_9.jpg" alt=""></p>
-<p>当k &lt; i &lt;= m时，对u_1，u<em>2，…，uk进行扩展u</em>(k+1),…,u_m，使得u_1，u_2，…，u_m为m维空间中的一组正交基，即<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_10.jpg" alt=""></p>
-<p>同样的，对v1，v2，…，vk进行扩展v(k+1),…,vn（这n-k个向量存在于A的零空间中，即Ax=0的解空间的基），使得v1，v2，…，vn为n维空间中的一组正交基，即<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_11.jpg" alt=""></p>
-<p>则可得<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_12.jpg" alt=""></p>
-<p>继而可以得到A矩阵的奇异值分解：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_13.jpg" alt=""><br>其中，<img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_14.jpg" alt=""></p>
-<h1 id="满秩分解"><a href="#满秩分解" class="headerlink" title="满秩分解"></a>满秩分解</h1><p>现在可以来对A矩阵的映射过程进行分析了：如果在n维空间中找到一个（超）矩形，其边都落在A’A的特征向量的方向上，那么经过A变换后的形状仍然为（超）矩形！<br>vi为A’A的特征向量，称为A的右奇异向量，ui=Avi实际上为AA’的特征向量，称为A的左奇异向量。下面利用SVD证明文章一开始的满秩分解：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_15.jpg" alt=""></p>
-<p>利用矩阵分块乘法展开得：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_16.jpg" alt=""></p>
-<p>可以看到第二项为0，所以有<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_17.jpg" alt=""></p>
-<p>令<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_18.jpg" alt=""><br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_19.jpg" alt=""><br>则A=XY即是A的满秩分解。</p>
+<p>所以取单位向量<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_8.jpg" alt="8"></p>
+<p>由此可得<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_9.jpg" alt="9"></p>
+<p>当k &lt; i &lt;= m时，对u_1，u<em>2，…，uk进行扩展u</em>(k+1),…,u_m，使得u_1，u_2，…，u_m为m维空间中的一组正交基，即<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_10.jpg" alt="10"></p>
+<p>同样的，对v1，v2，…，vk进行扩展v(k+1),…,vn（这n-k个向量存在于A的零空间中，即Ax=0的解空间的基），使得v1，v2，…，vn为n维空间中的一组正交基，即<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_11.jpg" alt="11"></p>
+<p>则可得<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_12.jpg" alt="12"></p>
+<p>继而可以得到A矩阵的奇异值分解：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_13.jpg" alt="13"><br>其中，<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_14.jpg" alt="14"></p>
+<h1 id="满秩分解"><a href="#满秩分解" class="headerlink" title="满秩分解"></a>满秩分解</h1><p>现在可以来对A矩阵的映射过程进行分析了：如果在n维空间中找到一个（超）矩形，其边都落在A’A的特征向量的方向上，那么经过A变换后的形状仍然为（超）矩形！<br>vi为A’A的特征向量，称为A的右奇异向量，ui=Avi实际上为AA’的特征向量，称为A的左奇异向量。下面利用SVD证明文章一开始的满秩分解：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_15.jpg" alt="1"></p>
+<p>利用矩阵分块乘法展开得：<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_16.jpg" alt="2"></p>
+<p>可以看到第二项为0，所以有<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_17.jpg" alt="3"></p>
+<p>令<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_18.jpg" alt="4"><br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/svd_19.jpg" alt="5"><br>则A=XY即是A的满秩分解。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/07/奇异值分解/" data-id="cj9rteduz0000xouxtpwkqnxl" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/11/07/奇异值分解/" data-id="cj9rthiq70003h4uxyrmctv2w" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -160,7 +160,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/06/线性回归/" data-id="cj9rtedvf0004xoux864seo21" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/11/06/线性回归/" data-id="cj9rthiqe0004h4ux765t4e1y" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -203,7 +203,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/01/LaTex-算法模板/" data-id="cj9rtedv40001xouxvs8jylmp" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/11/01/LaTex-算法模板/" data-id="cj9rthipz0000h4uxfnw4hsfj" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -263,7 +263,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/27/OneHot-Encoding/" data-id="cj9rtedv60002xouxjivcfr6v" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/10/27/OneHot-Encoding/" data-id="cj9rthiq60002h4ux9dl9lktp" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -308,7 +308,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/27/hello-world/" data-id="cj9rtedv80003xouxb50b3ah9" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/10/27/hello-world/" data-id="cj9rthiq40001h4uxc1ur6qxy" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -333,7 +333,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
     </div>
@@ -343,7 +343,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -380,7 +380,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
