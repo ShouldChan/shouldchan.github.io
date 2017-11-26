@@ -48,9 +48,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -60,6 +60,49 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-集成学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/26/集成学习/" class="article-date">
+  <time datetime="2017-11-26T03:06:33.000Z" itemprop="datePublished">2017-11-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/26/集成学习/">集成学习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>周中在实验室seminar上做了一个有关集成学习的报告，趁周末有空，把集成学习的相关内容写个博客。我们这里讲的集成学习主要包括个体与集成、Boosting和结合策略。</p>
+<h1 id="集成学习的基本思想"><a href="#集成学习的基本思想" class="headerlink" title="集成学习的基本思想"></a>集成学习的基本思想</h1><p>通过对周志华老师的西瓜书上有关集成学习的内容进行重新揉捏，我们主要要回答这三个问题。集成学习为什么有效？如何构建不同的个体学习器？如何综合多个个体学习器？<br>而在回答这三个问题之前，都必须明白什么是集成学习，什么是个体学习器。</p>
+<h2 id="集成学习是什么"><a href="#集成学习是什么" class="headerlink" title="集成学习是什么"></a>集成学习是什么</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>集成学习，英文名Ensemble Learning。粗泛地讲，就是通过构建并结合多个学习器来完成学习任务。进一步扩展，把性能较低的多种弱学习器，通过适当组合而形成高性能地强学习器的方法。这里的弱学习器是指泛化性能略优于随机猜测的学习器，在集成学习的概念里，弱学习器可以都被称为个体学习器。</p>
+<h3 id="集成学习的类别"><a href="#集成学习的类别" class="headerlink" title="集成学习的类别"></a>集成学习的类别</h3><p>集成学习分为同质集成和异质集成，相对应的英文名分别为： Homogeneous和Heterogeneous。这两个词根应该非常熟悉的，同性恋和异性恋也是这两个词根开头的。同质集成是指集成中只包含同种类型的个体学习器。异质集成是指集成中包含不同类型的个体学习器。举个例子，如果你的个体学习器都是决策树，那么就属于同质集成。如果你的个体学习器中有决策树和神经网络，那么就属于异质集成。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_1.jpg" alt="集成学习概念示意图（ensemble_1）"></p>
+<h2 id="集成学习为什么有效"><a href="#集成学习为什么有效" class="headerlink" title="集成学习为什么有效"></a>集成学习为什么有效</h2><p>首先，我们来看这个二分类任务（源自西瓜书）：打勾表示分类正确，打叉表示错误。纵观看每一列最后集成的结合是按照投票法（majority voting）产生，即少数服从多数的原则。第一个，每个学习器都有2/3的准确率，最后集成准确率达到了100%。第二个，每个学习器同样都有2/3的准确率，但是集成没起作用。由于h1,h2,h3的性能相似，都把test1、test2分对了，也都把test3分错了，所以按照投票法结合后的集成效果维持原样。对比一和二，给我们的启发就是个体学习器之间要有多样性，学习器间要有差异。再看第三个，每个学习器都只有1/3的准确率，在最后集成后性能反而起负作用 。给我们的启发就是，个体学习器自身要有一定的准确性，不能太差了，1/3的准确率都低于随机猜测的50%，不符合弱学习器的基本设定。50%的准确率是二分类任务中的硬性指标。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_2.jpg" alt="示例-1二分类任务（ensemble_2）"><br>接着，再看第二个示例：假设我们给出了右边这个正反例的分布，现在只能使用（不考虑高维空间的）线性模型将其正确分类。每个线性模型都不能成功讲该数据集分类。这三个线性模型的简单综合即可成功讲数据集分类。我们可以发现每个模型都范着不同的错误，但是在综合时能够取长补短，是的综合后的模型性能更好。这个简单的例子给我们的启发仍然是多样性和结合手段要好。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_3.jpg" alt="示例-2分类问题（ensemble_3）"><br>通过这两个简单的例子我们回答这个section的问题：个体学习器之间要有多样性，且自身的性能不能太差，通过优秀的结合策略，集成学习才能达到有效。补上一句：相同的多个个体学习器是不会带来任何提升的。</p>
+<h2 id="如何构建不同的个体学习器"><a href="#如何构建不同的个体学习器" class="headerlink" title="如何构建不同的个体学习器"></a>如何构建不同的个体学习器</h2><h2 id="如何综合多个个体学习器"><a href="#如何综合多个个体学习器" class="headerlink" title="如何综合多个个体学习器"></a>如何综合多个个体学习器</h2><h1 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h1><h2 id="AdaBoost及其应用"><a href="#AdaBoost及其应用" class="headerlink" title="AdaBoost及其应用"></a>AdaBoost及其应用</h2><h2 id="如何避免过拟合"><a href="#如何避免过拟合" class="headerlink" title="如何避免过拟合"></a>如何避免过拟合</h2><h1 id="结合策略"><a href="#结合策略" class="headerlink" title="结合策略"></a>结合策略</h1><h2 id="Stacking"><a href="#Stacking" class="headerlink" title="Stacking"></a>Stacking</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/26/集成学习/" data-id="cjag91i6100021suxopkk8mvc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-奇异值分解" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -107,7 +150,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/07/奇异值分解/" data-id="cj9rthiq70003h4uxyrmctv2w" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/11/07/奇异值分解/" data-id="cjag91i5t00001sux59d6upey" class="article-share-link">Share</a>
       
       
     </footer>
@@ -160,7 +203,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/06/线性回归/" data-id="cj9rthiqe0004h4ux765t4e1y" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/11/06/线性回归/" data-id="cjag91i5x00011suxo143yt3y" class="article-share-link">Share</a>
       
       
     </footer>
@@ -203,7 +246,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/01/LaTex-算法模板/" data-id="cj9rthipz0000h4uxfnw4hsfj" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/11/01/LaTex-算法模板/" data-id="cjag91i6k00051sux3aqmgm91" class="article-share-link">Share</a>
       
       
     </footer>
@@ -263,7 +306,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/27/OneHot-Encoding/" data-id="cj9rthiq60002h4ux9dl9lktp" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/10/27/OneHot-Encoding/" data-id="cjag91i6l00061suxbjuvl4zx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -308,7 +351,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/27/hello-world/" data-id="cj9rthiq40001h4uxc1ur6qxy" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/10/27/hello-world/" data-id="cjag91i6s00071suxfm2dpq10" class="article-share-link">Share</a>
       
       
     </footer>
@@ -327,9 +370,23 @@
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Machine-Learning/" style="font-size: 10px;">Machine Learning</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -343,9 +400,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/11/26/集成学习/">集成学习</a>
+          </li>
         
           <li>
             <a href="/2017/11/07/奇异值分解/">奇异值分解</a>
@@ -363,10 +424,6 @@
             <a href="/2017/10/27/OneHot-Encoding/">OneHot Encoding</a>
           </li>
         
-          <li>
-            <a href="/2017/10/27/hello-world/">Hello World</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -380,7 +437,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 John Doe<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
