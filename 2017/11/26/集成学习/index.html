@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_12.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_13.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_14.jpg">
-<meta property="og:updated_time" content="2017-11-26T11:46:16.688Z">
+<meta property="og:updated_time" content="2017-11-26T11:52:17.958Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="集成学习">
 <meta name="twitter:description" content="周中在实验室seminar上做了一个有关集成学习的报告，趁周末有空，把集成学习的相关内容写个博客。我们这里讲的集成学习主要包括个体与集成、Boosting和结合策略。 集成学习的基本思想通过对周志华老师的西瓜书上有关集成学习的内容进行重新揉捏，我们主要要回答这三个问题。集成学习为什么有效？如何构建不同的个体学习器？如何综合多个个体学习器？而在回答这三个问题之前，都必须明白什么是集成学习，什么是个体">
@@ -68,9 +68,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -120,12 +120,15 @@
 <p>我们先用训练集s1训练第一层那些模型，然后模型训练好后，把s2扔进这些模型，得到输出(特征)，接着利用这些输出训练第二层模型，最后再去做测试。<br>这里的重点是 会有一个问题 如果s1和s2是一样的 肯定会导致过拟合 换句话说 s1和s2如果很相似的话 整套模型就会容易过拟合。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_13.jpg" alt="Stacking（ensemble_13）"></p>
 <p>在stacking中也有类似交叉检验的办法。把训练集分成k份，取k-1用来训练第一层学习器，把剩余的那个1份训练集训练好的第一层模型模型，用这个输出的特征再去构建第二层模型。缺点就是计算复杂度比较高。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_14.jpg" alt="Stacking交叉验证（ensemble_14）"></p>
 <h2 id="实际使用注意事项"><a href="#实际使用注意事项" class="headerlink" title="实际使用注意事项"></a>实际使用注意事项</h2><h3 id="注意避免过拟合"><a href="#注意避免过拟合" class="headerlink" title="注意避免过拟合"></a>注意避免过拟合</h3><p>可以采用简单的第二层模型，比如线性回归</p>
-<h3 id="多样化"><a href="#多样化" class="headerlink" title="多样化"></a>多样化</h3><p>为了较好的效果，第一层学习器要尽量多样化。</p>
+<h3 id="多样化"><a href="#多样化" class="headerlink" title="多样化"></a>多样化</h3><p>为了较好的效果，第一层学习器要尽量多样化。<br>使用不同的数据集，如使用不同的样本的子集，或者不同特征的子集<br>使用不同的算法</p>
+<h2 id="Boosting和Stacking比较"><a href="#Boosting和Stacking比较" class="headerlink" title="Boosting和Stacking比较"></a>Boosting和Stacking比较</h2><h3 id="Boosting-1"><a href="#Boosting-1" class="headerlink" title="Boosting"></a>Boosting</h3><p>在参数设置较好的前提下能够取得较好的性能<br>更易过拟合<br>需要顺次训练模型，不易并行计算</p>
+<h3 id="Stacking-1"><a href="#Stacking-1" class="headerlink" title="Stacking"></a>Stacking</h3><p>多用于最终综合多个性能较好的模型<br>最易于过拟合</p>
+<p>最后，集成学习还有Bagging和随机森林，GBDT，XgBoost，以后单独开章再讲。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/26/集成学习/" data-id="cjagpcvzv000570uxy9iyie2v" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/26/集成学习/" data-id="cjagphv3m0005v4ux7rkv62z3" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
@@ -138,7 +141,7 @@
   
   
     <a href="/2017/11/07/奇异值分解/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ancien</strong>
       <div class="article-nav-title">奇异值分解</div>
     </a>
   
@@ -156,7 +159,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
     </div>
@@ -166,7 +169,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
       <a href="/tags/Machine-Learning/" style="font-size: 10px;">Machine Learning</a>
     </div>
@@ -185,7 +188,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -222,7 +225,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
