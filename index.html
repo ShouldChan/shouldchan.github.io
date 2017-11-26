@@ -88,11 +88,16 @@
 <h2 id="集成学习是什么"><a href="#集成学习是什么" class="headerlink" title="集成学习是什么"></a>集成学习是什么</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>集成学习，英文名Ensemble Learning。粗泛地讲，就是通过构建并结合多个学习器来完成学习任务。进一步扩展，把性能较低的多种弱学习器，通过适当组合而形成高性能地强学习器的方法。这里的弱学习器是指泛化性能略优于随机猜测的学习器，在集成学习的概念里，弱学习器可以都被称为个体学习器。</p>
 <h3 id="集成学习的类别"><a href="#集成学习的类别" class="headerlink" title="集成学习的类别"></a>集成学习的类别</h3><p>集成学习分为同质集成和异质集成，相对应的英文名分别为： Homogeneous和Heterogeneous。这两个词根应该非常熟悉的，同性恋和异性恋也是这两个词根开头的。同质集成是指集成中只包含同种类型的个体学习器。异质集成是指集成中包含不同类型的个体学习器。举个例子，如果你的个体学习器都是决策树，那么就属于同质集成。如果你的个体学习器中有决策树和神经网络，那么就属于异质集成。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_1.jpg" alt="集成学习概念示意图（ensemble_1）"></p>
 <h2 id="集成学习为什么有效"><a href="#集成学习为什么有效" class="headerlink" title="集成学习为什么有效"></a>集成学习为什么有效</h2><p>首先，我们来看这个二分类任务（源自西瓜书）：打勾表示分类正确，打叉表示错误。纵观看每一列最后集成的结合是按照投票法（majority voting）产生，即少数服从多数的原则。第一个，每个学习器都有2/3的准确率，最后集成准确率达到了100%。第二个，每个学习器同样都有2/3的准确率，但是集成没起作用。由于h1,h2,h3的性能相似，都把test1、test2分对了，也都把test3分错了，所以按照投票法结合后的集成效果维持原样。对比一和二，给我们的启发就是个体学习器之间要有多样性，学习器间要有差异。再看第三个，每个学习器都只有1/3的准确率，在最后集成后性能反而起负作用 。给我们的启发就是，个体学习器自身要有一定的准确性，不能太差了，1/3的准确率都低于随机猜测的50%，不符合弱学习器的基本设定。50%的准确率是二分类任务中的硬性指标。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_2.jpg" alt="示例-1二分类任务（ensemble_2）"><br>接着，再看第二个示例：假设我们给出了右边这个正反例的分布，现在只能使用（不考虑高维空间的）线性模型将其正确分类。每个线性模型都不能成功讲该数据集分类。这三个线性模型的简单综合即可成功讲数据集分类。我们可以发现每个模型都范着不同的错误，但是在综合时能够取长补短，是的综合后的模型性能更好。这个简单的例子给我们的启发仍然是多样性和结合手段要好。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_3.jpg" alt="示例-2分类问题（ensemble_3）"><br>通过这两个简单的例子我们回答这个section的问题：个体学习器之间要有多样性，且自身的性能不能太差，通过优秀的结合策略，集成学习才能达到有效。补上一句：相同的多个个体学习器是不会带来任何提升的。</p>
-<h2 id="如何构建不同的个体学习器"><a href="#如何构建不同的个体学习器" class="headerlink" title="如何构建不同的个体学习器"></a>如何构建不同的个体学习器</h2><h2 id="如何综合多个个体学习器"><a href="#如何综合多个个体学习器" class="headerlink" title="如何综合多个个体学习器"></a>如何综合多个个体学习器</h2><h1 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h1><h2 id="AdaBoost及其应用"><a href="#AdaBoost及其应用" class="headerlink" title="AdaBoost及其应用"></a>AdaBoost及其应用</h2><h2 id="如何避免过拟合"><a href="#如何避免过拟合" class="headerlink" title="如何避免过拟合"></a>如何避免过拟合</h2><h1 id="结合策略"><a href="#结合策略" class="headerlink" title="结合策略"></a>结合策略</h1><h2 id="Stacking"><a href="#Stacking" class="headerlink" title="Stacking"></a>Stacking</h2>
+<h2 id="如何构建不同的个体学习器"><a href="#如何构建不同的个体学习器" class="headerlink" title="如何构建不同的个体学习器"></a>如何构建不同的个体学习器</h2><p>第一，可以采用不同的学习算法，如图所示，训练集L给到A1-An，n个不同的学习算法，对应得到不同的模型C1-Cn。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_4.jpg" alt="构建方法1（ensemble_4）"><br>第二，可以采用相同的学习算法，但使用不同的参数。如图，训练集L都给到一个同样的A算法，通过不同的参数P1-Pn的调节得到不同的模型C1-Cn。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_5.jpg" alt="构建方法2（ensemble_5）"><br>第三，采用不同的样本子集，在每个数据集中使用不同的特征。如图，训练集L分成n个不同的子集分别给A算法进行训练，对应调参得到不同的模型C1-Cn。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_6.jpg" alt="构建方法3（ensemble_6）"></p>
+<h2 id="如何综合多个个体学习器"><a href="#如何综合多个个体学习器" class="headerlink" title="如何综合多个个体学习器"></a>如何综合多个个体学习器</h2><p>这个问题同样也是结合策略。主要有以下三种：<br>第一，投票法（majority voting）。即每个个体学习器具有相同的权重，这也是最常用的方法。<br>第二，有权重的投票（weighted voting）。即可用不同的方法来确定权重<br>第三，训练一个新模型来确定如何综合。主要就是指学习法，Stacking。一般我们偏好使用简单模型（线性模型）来综合。<br>Stacking在最后一个section详细讲解。</p>
+<h1 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h1><p>集成学习方法主要有Boosting、Bagging和Stacking。这里主要介绍Boosting。Boosting主要代表就是AdaBoost和GBDT。Boosting本意是提高，通过顺次建立一系列个体学习器，后面的学习器分析当前已建立的基学习器以更好的处理数据。Boosting里面个体学习器的综合主要使用有权重的线性组合。个体学习器的权重一般由它的性能决定。我们看下面这张图，比如设定是一个分类问题，拿到训练样本，给到学习器1对样本进行分好类，然后对学习器1分错的那部分增加权重，并根据学习器1的性能更新权重，接着给到学习器2，依次进行如上的训练。最后根据权重，加权输出得到我们的集成模型。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_7.jpg" alt="Boosting框架（ensemble_7）"></p>
+<h2 id="AdaBoost及其应用"><a href="#AdaBoost及其应用" class="headerlink" title="AdaBoost及其应用"></a>AdaBoost及其应用</h2><p>通过一个简单的示例来熟悉一下AdaBoost。示例中，每个矩形代表一个样本，样本权值正比于矩形大小。我们一步一步来看，首先初始化样本权重都是一样的，喂给学习器h1（决策树模型），最后得到的结果从上至下依次为：对错错对，h1的性能用其准确率来衡量，为1/2，设置其权重。下一步我们增加分错的两个样本的权重，喂给h2，h2的准确率达到了3/4，更新其权重。下一步增加h2分错的第四个样本的权重，喂给h3，h3的分类结果是错对错对，准确率达到了1/2，更新h3的性能权重。下一步增加分错样本的权重给h4，最后h4达到100%的准确率将其分对了。最后根据各个学习器的性能加权得到最后的模型h。如图，AdaBoost根据已有模型的分类结果，动态更新样本权重，使得新模型能够集中处理那些难分类的样本。决策树的大小反映了该决策树在最后综合时的权重。直观地讲，后面的弱分类器集中处理前面被错分地样本，这样使得分类器犯的错误各不相同，因此综合之后能够得到较好的效果。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_8.jpg" alt="AdaBoost示例（ensemble_8）"></p>
+<p>通过这个例子了解了AdaBoost的整个算法流程，下面给出用于分类问题的AdaBoost的算法。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_9.jpg" alt="适用于分类问题的AdaBoost算法（ensemble_9）"></p>
+<h2 id="如何避免过拟合"><a href="#如何避免过拟合" class="headerlink" title="如何避免过拟合"></a>如何避免过拟合</h2><h1 id="结合策略"><a href="#结合策略" class="headerlink" title="结合策略"></a>结合策略</h1><h2 id="Stacking"><a href="#Stacking" class="headerlink" title="Stacking"></a>Stacking</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/26/集成学习/" data-id="cjag91i6100021suxopkk8mvc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/26/集成学习/" data-id="cjagb88qn0005vouxqsrkj5jz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
@@ -150,7 +155,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/07/奇异值分解/" data-id="cjag91i5t00001sux59d6upey" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/07/奇异值分解/" data-id="cjagb88q80002voux72rqujia" class="article-share-link">Share</a>
       
       
     </footer>
@@ -203,7 +208,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/06/线性回归/" data-id="cjag91i5x00011suxo143yt3y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/06/线性回归/" data-id="cjagb88qa0003voux14x5g2zp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -246,7 +251,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/01/LaTex-算法模板/" data-id="cjag91i6k00051sux3aqmgm91" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/01/LaTex-算法模板/" data-id="cjagb88q60001vouxemofmh0j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -306,7 +311,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/27/OneHot-Encoding/" data-id="cjag91i6l00061suxbjuvl4zx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/27/OneHot-Encoding/" data-id="cjagb88q20000vouxqslg4e9y" class="article-share-link">Share</a>
       
       
     </footer>
@@ -351,7 +356,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/27/hello-world/" data-id="cjag91i6s00071suxfm2dpq10" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/27/hello-world/" data-id="cjagb88qb0004vouxzjh02tpp" class="article-share-link">Share</a>
       
       
     </footer>
