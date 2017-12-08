@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=932" >
   <meta name="MobileOptimized" content="932" >
   <meta name="generator" content="ShouldChan">
-  <title>OneHot Encoding</title>
+  <title>Archives: 2017/12</title>
 
   <link rel="stylesheet" type="text/css" href="/css/normalize.css">
   <link rel="stylesheet" type="text/css" href="/css/awe.css">
@@ -38,53 +38,55 @@
 </div>
 
     
-<div class="two-columns post-page">
+<div class="two-columns">
   <div class="content">
 
-    <div class="post box nocover">
-      <em class="date"><span>27</span>Oct</em>
-      <h2 class="post-title"><a href="/2017/10/27/OneHot-Encoding/">OneHot Encoding</a></h2>
-      <div class="post-content"><h1 id="One-Hot-编码"><a href="#One-Hot-编码" class="headerlink" title="One Hot 编码"></a>One Hot 编码</h1><p>One Hot编码（独热编码）：又称一位有效编码，其方法是使用N位状态寄存器来对N个状态进行编码，每个状态都有他独立的寄存器位，并且在任意时候，其中只有一位有效。</p>
-<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><h3 id="第一"><a href="#第一" class="headerlink" title="第一"></a>第一</h3><p>解决了分类器不好处理的属性数据的问题</p>
-<h3 id="第二"><a href="#第二" class="headerlink" title="第二"></a>第二</h3><p>在一定程度上起到了扩充特征的作用</p>
-<p>不多说，直接上代码解释。。。</p>
-<h1 id="python代码实现"><a href="#python代码实现" class="headerlink" title="python代码实现"></a>python代码实现</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from sklearn import preprocessing</div><div class="line">enc=preprocessing.OneHotEncoder()</div><div class="line">enc.fit([[0,0,3],[1,1,0],[0,2,1],[1,0,2]])</div><div class="line">enc.transform([0,1,3]).toarray()</div></pre></td></tr></table></figure>
-<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>这里将用大白话来解释，例如这里有三类特征：</p>
-<ol>
-<li>性别 {male,female}</li>
-<li>所处年龄段 {少年，青年，壮年}</li>
-<li>职业 {医生，警察，教师，学生}<br>这三类特征的每类特征都算一个维度，每个维度都有不同的值，第一个维度有两个值，第二个维度有三个值，第三个维度有四个值<br>分别对每个维度的值进行标注。</li>
-<li>{0，1}</li>
-<li>{0，1，2}</li>
-<li>{0，1，2，3}<br>我们这个对{0,1,3}特征进行OneHot编码后的输出，{0,1,3}表示{male,青年,学生}。</li>
-</ol>
-<h2 id="第一行"><a href="#第一行" class="headerlink" title="第一行"></a>第一行</h2><p>导入sklearn.preprocessing的包</p>
-<h2 id="第二行"><a href="#第二行" class="headerlink" title="第二行"></a>第二行</h2><p>调用preprocessing中的OneHotEncoder()方法</p>
-<h2 id="第三行"><a href="#第三行" class="headerlink" title="第三行"></a>第三行</h2><p>fit()这里描述了三维特征，并且定义了每一维特征中有几个取值。这是一个4\times 3的矩阵，4是三类特征中每一维度取值最多的个数，3则是维度数。看每一维，发现第一维有两个取值，第二维有三个取值，第三维有四个取值.</p>
-<h2 id="第四行"><a href="#第四行" class="headerlink" title="第四行"></a>第四行</h2><p>然后用transform()方法实现用OneHot表示{0,1,3}这个特征，并且最后用array存储{0,1,3}onehot编码表示的这个特征。</p>
-<h2 id="手头解法（意念解法）"><a href="#手头解法（意念解法）" class="headerlink" title="手头解法（意念解法）"></a>手头解法（意念解法）</h2><p>这里再描述一种手头解法来进行更通俗的理解。</p>
-<ol>
-<li>先是0，第一维有两个值要占两位，两个坑位中，0（male）是第一位，取0则第一位是1，第二位是0，最后得10；</li>
-<li>再是1，第二维有三个取值要占三位，三个坑位中，1（青年）占第二位，则第二位为1，其余两位为0，最后得010；</li>
-<li>最后是3，第三维有四个取值要占四位，类似于之前说的看法，得出在3这个位置要取，也就是0001。<br>最后将这三个特征归到一个维度的特征向量上，输出是：10,010,0001————&gt;100100001，这就是最后的输出结果。</li>
-</ol>
-</div>
+
+
+
+    <div class="post box">
+      <div class="coverimg imgLiquid">
+        <img src="l">
+        <em class="date"><span>08</span>Dec</em>
+        <h2 class="post-title"><a href="/2017/12/08/集成学习下/">集成学习下</a></h2>
+      </div>
+      <div class="post-content">横跨快有两周的时间了，补一下集成学习下的内容。上上周写了集成学习上的博客，在那一块知识，有一个很典型的Boosting方法GDBT没有讲，之后会研究一番单独写一篇来表述一下。今天的主题就是Bagging和随机森林。这一部分内容在实验室seminar上是由大神Captain做的报告，这里会引用一些他使用的slide。
+BaggingBagging的全称是Bootstrap AGGegratING。简</div>
 
       <div class="bottom-panel">
-        <ul class="social-likes" data-url="/2017/10/27/OneHot-Encoding/">
+        <ul class="social-likes" data-url="http://yoursite.com/2017/12/08/集成学习下/">
           <li class="facebook" title="like"></li>
           <li class="twitter" title="twitte"></li>
           <li class="plusone" title="google"></li>
         </ul>
+        <a href="http://yoursite.com/2017/12/08/集成学习下/#disqus_thread" class="btn-comment">Comments</a>
       </div>
     </div>
+
     
+
+<ul class="paging box">
+  
+  <span class="page-number">Page 1 of 1</span>
+  
+</ul>
+
   </div>
 
   <div class="widgetarea">
 
     
     
+<div class="tags widget">
+  <h3 class="title">Tags</h3>
+  <div style="text-align:center">
+    
+    <a class="button" href="/tags/Machine-Learning/">Machine Learning</a>
+    
+  </div>
+  
+</div>
+
 
 <div class="tagcloud" id="fbox-tagcloud" style="margin:10px; display:none; overflow: hidden"><a href="/tags/Machine-Learning/" style="font-size: 12px;">Machine Learning</a></div>
 
