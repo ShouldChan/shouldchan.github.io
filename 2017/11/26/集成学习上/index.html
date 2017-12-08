@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta name="viewport" content="width=932" >
+  <meta name="MobileOptimized" content="932" >
+  <meta name="generator" content="ShouldChan">
+  <title>集成学习上</title>
+
+  <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/css/awe.css">
+  <link rel="stylesheet" type="text/css" href="/css/social-likes.css">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="/js/imgLiquid-min.js"></script>
+  <script src="/js/social-likes.min.js"></script>
+</head>
+
+<body>
+  <div class="main-container">
+    
+
+<div class="box profile">
+  <div class="heading" style="background: #3e5354 url(/images/bg-heading.jpg) no-repeat;">
+    <div class="profile-img">
+      <a href="//shouldchan.github.io/"><img src="/images/img-profile.jpg" width="154" height="150" alt="image description"></a>
+    </div>
+    <strong class="user"><a href="/">ShouldChan</a></strong>
+    <span class="locate">Suzhou</span>
+  </div>
+  <div class="setting">
+    <a href="//shouldchan.github.io/" class="btn-profile">Profile</a>
+    <a href="/" class="btn-photos">Photos</a>
+    <a href="/" class="btn-follow">Follow me</a>
+  </div>
+</div>
+
+    
+<div class="two-columns post-page">
+  <div class="content">
+
+    <div class="post box nocover">
+      <em class="date"><span>26</span>Nov</em>
+      <h2 class="post-title"><a href="/2017/11/26/集成学习上/">集成学习上</a></h2>
+      <div class="post-content"><p>周中在实验室seminar上做了一个有关集成学习的报告，趁周末有空，把集成学习的相关内容写个博客。我们这里讲的集成学习主要包括个体与集成、Boosting和结合策略。</p>
+<h1 id="集成学习的基本思想"><a href="#集成学习的基本思想" class="headerlink" title="集成学习的基本思想"></a>集成学习的基本思想</h1><p>通过对周志华老师的西瓜书上有关集成学习的内容进行重新揉捏，我们主要要回答这三个问题。集成学习为什么有效？如何构建不同的个体学习器？如何综合多个个体学习器？<br>而在回答这三个问题之前，都必须明白什么是集成学习，什么是个体学习器。</p>
+<h2 id="集成学习是什么"><a href="#集成学习是什么" class="headerlink" title="集成学习是什么"></a>集成学习是什么</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>集成学习，英文名Ensemble Learning。粗泛地讲，就是通过构建并结合多个学习器来完成学习任务。进一步扩展，把性能较低的多种弱学习器，通过适当组合而形成高性能地强学习器的方法。这里的弱学习器是指泛化性能略优于随机猜测的学习器，在集成学习的概念里，弱学习器可以都被称为个体学习器。</p>
+<h3 id="集成学习的类别"><a href="#集成学习的类别" class="headerlink" title="集成学习的类别"></a>集成学习的类别</h3><p>集成学习分为同质集成和异质集成，相对应的英文名分别为： Homogeneous和Heterogeneous。这两个词根应该非常熟悉的，同性恋和异性恋也是这两个词根开头的。同质集成是指集成中只包含同种类型的个体学习器。异质集成是指集成中包含不同类型的个体学习器。举个例子，如果你的个体学习器都是决策树，那么就属于同质集成。如果你的个体学习器中有决策树和神经网络，那么就属于异质集成。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_1.jpg" alt="集成学习概念示意图（ensemble_1）"></p>
+<h2 id="集成学习为什么有效"><a href="#集成学习为什么有效" class="headerlink" title="集成学习为什么有效"></a>集成学习为什么有效</h2><p>首先，我们来看这个二分类任务（源自西瓜书）：打勾表示分类正确，打叉表示错误。纵观看每一列最后集成的结合是按照投票法（majority voting）产生，即少数服从多数的原则。第一个，每个学习器都有2/3的准确率，最后集成准确率达到了100%。第二个，每个学习器同样都有2/3的准确率，但是集成没起作用。由于h1,h2,h3的性能相似，都把test1、test2分对了，也都把test3分错了，所以按照投票法结合后的集成效果维持原样。对比一和二，给我们的启发就是个体学习器之间要有多样性，学习器间要有差异。再看第三个，每个学习器都只有1/3的准确率，在最后集成后性能反而起负作用 。给我们的启发就是，个体学习器自身要有一定的准确性，不能太差了，1/3的准确率都低于随机猜测的50%，不符合弱学习器的基本设定。50%的准确率是二分类任务中的硬性指标。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_2.jpg" alt="示例-1二分类任务（ensemble_2）"><br>接着，再看第二个示例：假设我们给出了右边这个正反例的分布，现在只能使用（不考虑高维空间的）线性模型将其正确分类。每个线性模型都不能成功讲该数据集分类。这三个线性模型的简单综合即可成功讲数据集分类。我们可以发现每个模型都范着不同的错误，但是在综合时能够取长补短，是的综合后的模型性能更好。这个简单的例子给我们的启发仍然是多样性和结合手段要好。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_3.jpg" alt="示例-2分类问题（ensemble_3）"><br>通过这两个简单的例子我们回答这个section的问题：个体学习器之间要有多样性，且自身的性能不能太差，通过优秀的结合策略，集成学习才能达到有效。补上一句：相同的多个个体学习器是不会带来任何提升的。</p>
+<h2 id="如何构建不同的个体学习器"><a href="#如何构建不同的个体学习器" class="headerlink" title="如何构建不同的个体学习器"></a>如何构建不同的个体学习器</h2><p>第一，可以采用不同的学习算法，如图所示，训练集L给到A1-An，n个不同的学习算法，对应得到不同的模型C1-Cn。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_4.jpg" alt="构建方法1（ensemble_4）"><br>第二，可以采用相同的学习算法，但使用不同的参数。如图，训练集L都给到一个同样的A算法，通过不同的参数P1-Pn的调节得到不同的模型C1-Cn。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_5.jpg" alt="构建方法2（ensemble_5）"><br>第三，采用不同的样本子集，在每个数据集中使用不同的特征。如图，训练集L分成n个不同的子集分别给A算法进行训练，对应调参得到不同的模型C1-Cn。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_6.jpg" alt="构建方法3（ensemble_6）"></p>
+<h2 id="如何综合多个个体学习器"><a href="#如何综合多个个体学习器" class="headerlink" title="如何综合多个个体学习器"></a>如何综合多个个体学习器</h2><p>这个问题同样也是结合策略。主要有以下三种：<br>第一，投票法（majority voting）。即每个个体学习器具有相同的权重，这也是最常用的方法。<br>第二，有权重的投票（weighted voting）。即可用不同的方法来确定权重<br>第三，训练一个新模型来确定如何综合。主要就是指学习法，Stacking。一般我们偏好使用简单模型（线性模型）来综合。<br>Stacking在最后一个section详细讲解。</p>
+<h1 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h1><p>集成学习方法主要有Boosting、Bagging和Stacking。这里主要介绍Boosting。Boosting主要代表就是AdaBoost和GBDT。Boosting本意是提高，通过顺次建立一系列个体学习器，后面的学习器分析当前已建立的基学习器以更好的处理数据。Boosting里面个体学习器的综合主要使用有权重的线性组合。个体学习器的权重一般由它的性能决定。我们看下面这张图，比如设定是一个分类问题，拿到训练样本，给到学习器1对样本进行分好类，然后对学习器1分错的那部分增加权重，并根据学习器1的性能更新权重，接着给到学习器2，依次进行如上的训练。最后根据权重，加权输出得到我们的集成模型。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_7.jpg" alt="Boosting框架（ensemble_7）"></p>
+<h2 id="AdaBoost及其应用"><a href="#AdaBoost及其应用" class="headerlink" title="AdaBoost及其应用"></a>AdaBoost及其应用</h2><p>通过一个简单的示例来熟悉一下AdaBoost。示例中，每个矩形代表一个样本，样本权值正比于矩形大小。我们一步一步来看，首先初始化样本权重都是一样的，喂给学习器h1（决策树模型），最后得到的结果从上至下依次为：对错错对，h1的性能用其准确率来衡量，为1/2，设置其权重。下一步我们增加分错的两个样本的权重，喂给h2，h2的准确率达到了3/4，更新其权重。下一步增加h2分错的第四个样本的权重，喂给h3，h3的分类结果是错对错对，准确率达到了1/2，更新h3的性能权重。下一步增加分错样本的权重给h4，最后h4达到100%的准确率将其分对了。最后根据各个学习器的性能加权得到最后的模型h。如图，AdaBoost根据已有模型的分类结果，动态更新样本权重，使得新模型能够集中处理那些难分类的样本。决策树的大小反映了该决策树在最后综合时的权重。直观地讲，后面的弱分类器集中处理前面被错分地样本，这样使得分类器犯的错误各不相同，因此综合之后能够得到较好的效果。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_8.jpg" alt="AdaBoost示例（ensemble_8）"></p>
+<p>通过这个例子了解了AdaBoost的整个算法流程，下面给出用于分类问题的AdaBoost的算法。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_9.jpg" alt="适用于分类问题的AdaBoost算法（ensemble_9）"></p>
+<p>从这个算法中我们必须抛出这么一个问题：为什么在AdaBoost使用指数损失函数来更新样本和个体学习器的权值？<br>（我直接贴图吧）<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_10.jpg" alt="解释为何使用指数损失函数（ensemble_10）"><br>由图可知，在综合下图损失函数的曲线，满足上述性质的只有指数函数。因此，这里我们引入指数函数来处理这两种不同的情况。注意，当时，我们仍然引入了损失，但是很小。指数函数的最大优点是它是连续可导的，而且导数非常容易计算，使得我们在求解相关的优化问题时很容易计算。</p>
+<p><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_11.png" alt="各种损失函数（ensemble_11）"></p>
+<h2 id="Boosting小结"><a href="#Boosting小结" class="headerlink" title="Boosting小结"></a>Boosting小结</h2><p>优点：1. Boosting能有效利用弱学习器构建强大的学习器；2. 学习速度快；3. AdaBoost适用于数值型数据和标称型数据<br>缺点：容易受噪声影响和过拟合<br>这里要说明一下，比如说训练集中有异常值，Boosting中每一次更新权重都会给没有分对的很大权重，所以最后会导致效果不理想。</p>
+<h2 id="如何避免过拟合"><a href="#如何避免过拟合" class="headerlink" title="如何避免过拟合"></a>如何避免过拟合</h2><h3 id="引入随机性"><a href="#引入随机性" class="headerlink" title="引入随机性"></a>引入随机性</h3><h3 id="线性模型：加正则项"><a href="#线性模型：加正则项" class="headerlink" title="线性模型：加正则项"></a>线性模型：加正则项</h3><h3 id="决策树模型"><a href="#决策树模型" class="headerlink" title="决策树模型"></a>决策树模型</h3><p>控制学习率<br>控制决策树的总数<br>控制每颗决策树的大小</p>
+<h3 id="神经网络类的模型"><a href="#神经网络类的模型" class="headerlink" title="神经网络类的模型"></a>神经网络类的模型</h3><p>Early stopping<br>Dropout（深度）</p>
+<h1 id="结合策略"><a href="#结合策略" class="headerlink" title="结合策略"></a>结合策略</h1><h2 id="Stacking"><a href="#Stacking" class="headerlink" title="Stacking"></a>Stacking</h2><p>Stacking就是使用一个新的模型来结合之前的弱学习器的方法。如图所示，第一层学习器就是我们之前谈到的一批个体学习器，第二层学习器就是用来结合第一层学习器的模型。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_12.jpg" alt="Stacking（ensemble_12）"></p>
+<p>我们先用训练集s1训练第一层那些模型，然后模型训练好后，把s2扔进这些模型，得到输出(特征)，接着利用这些输出训练第二层模型，最后再去做测试。<br>这里的重点是 会有一个问题 如果s1和s2是一样的 肯定会导致过拟合 换句话说 s1和s2如果很相似的话 整套模型就会容易过拟合。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_13.jpg" alt="Stacking（ensemble_13）"></p>
+<p>在stacking中也有类似交叉检验的办法。把训练集分成k份，取k-1用来训练第一层学习器，把剩余的那个1份训练集训练好的第一层模型模型，用这个输出的特征再去构建第二层模型。缺点就是计算复杂度比较高。<br><img src="https://raw.githubusercontent.com/ShouldChan/ImageStore/master/blog_image/ensemble_14.jpg" alt="Stacking交叉验证（ensemble_14）"></p>
+<h2 id="实际使用注意事项"><a href="#实际使用注意事项" class="headerlink" title="实际使用注意事项"></a>实际使用注意事项</h2><h3 id="注意避免过拟合"><a href="#注意避免过拟合" class="headerlink" title="注意避免过拟合"></a>注意避免过拟合</h3><p>可以采用简单的第二层模型，比如线性回归</p>
+<h3 id="多样化"><a href="#多样化" class="headerlink" title="多样化"></a>多样化</h3><p>为了较好的效果，第一层学习器要尽量多样化。<br>使用不同的数据集，如使用不同的样本的子集，或者不同特征的子集<br>使用不同的算法</p>
+<h2 id="Boosting和Stacking比较"><a href="#Boosting和Stacking比较" class="headerlink" title="Boosting和Stacking比较"></a>Boosting和Stacking比较</h2><h3 id="Boosting-1"><a href="#Boosting-1" class="headerlink" title="Boosting"></a>Boosting</h3><p>在参数设置较好的前提下能够取得较好的性能<br>更易过拟合<br>需要顺次训练模型，不易并行计算</p>
+<h3 id="Stacking-1"><a href="#Stacking-1" class="headerlink" title="Stacking"></a>Stacking</h3><p>多用于最终综合多个性能较好的模型<br>最易于过拟合</p>
+<p>最后，集成学习还有Bagging和随机森林，GBDT，XgBoost，以后单独开章再讲。</p>
+</div>
+
+      <div class="bottom-panel">
+        <ul class="social-likes" data-url="/2017/11/26/集成学习上/">
+          <li class="facebook" title="like"></li>
+          <li class="twitter" title="twitte"></li>
+          <li class="plusone" title="google"></li>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="widgetarea">
+
+    
+    
+<div class="tags widget">
+  <h3 class="title">Tags</h3>
+  <div style="text-align:center">
+    
+    <a class="button" href="/tags/Machine-Learning/">Machine Learning</a>
+    
+  </div>
+  
+</div>
+
+
+<div class="tagcloud" id="fbox-tagcloud" style="margin:10px; display:none; overflow: hidden"><a href="/tags/Machine-Learning/" style="font-size: 12px;">Machine Learning</a></div>
+
+    
+
+    
+      
+
+<ul class="widget blogroll">
+  <h3 class="title">Recent Post</h3>
+  
+    
+    <li>
+      <div class="text-holder">
+        <h3 class="link-title"><a href="/2017/11/26/集成学习上/">集成学习上</a></h3>
+        <p>周中在实验室seminar上做了一个有关集成学习的报告，趁周末有空，把集成学习的相关内容写个博客。我</p>
+      </div>
+    </li>
+  
+    
+    <li>
+      <div class="text-holder">
+        <h3 class="link-title"><a href="/2017/11/07/奇异值分解/">奇异值分解</a></h3>
+        <p>简介奇异值分解（Singular Value Decomposition，SVD）是矩阵分解的一种，</p>
+      </div>
+    </li>
+  
+    
+    <li>
+      <div class="text-holder">
+        <h3 class="link-title"><a href="/2017/11/06/线性回归/">线性回归</a></h3>
+        <p>线性回归线性回归是一种监督学习方法，可以被用来解决回归问题。它用一条直线或高维空间中的平面来拟合训练</p>
+      </div>
+    </li>
+  
+    
+    <li>
+      <div class="text-holder">
+        <h3 class="link-title"><a href="/2017/11/01/LaTex-算法模板/">LaTex_算法模板</a></h3>
+        <p>LaTex 算法模板LaTex有三个算法包，分别为algorithm, algorithmic, a</p>
+      </div>
+    </li>
+  
+    
+    <li>
+      <div class="text-holder">
+        <h3 class="link-title"><a href="/2017/10/27/OneHot-Encoding/">OneHot Encoding</a></h3>
+        <p>One Hot 编码One Hot编码（独热编码）：又称一位有效编码，其方法是使用N位状态寄存器来对</p>
+      </div>
+    </li>
+  
+</ul>
+
+
+    
+
+  </div>
+</div>
+
+
+  </div>
+  
+<div class="footer">
+  <div class="container">
+    <a href="//github.com/kywk/hexo-theme-awe">AWE for hexo</a> inspired by <a href="http://goo.gl/H8OMRE">Awesome UI Kit</a>,
+    ported by <a href="//kywk.github.io/">MooCow (Aka. kywk)</a>.
+    
+    &copy; 2017 Should Chan All Rights Reserved
+    
+  </div>
+</div>
+
+  <!-- disqus -->
+
+
+
+<script>
+$(document).ready(function() {
+  $('.imgLiquid').imgLiquid({fill:true, fadeInTime:500});
+});
+</script>
+
+
+<!-- fancybox -->
+<link rel="stylesheet" href="/package/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="/package/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+<script type="text/javascript">
+(function($){
+  $(".fancybox").fancybox();
+  $(".various").fancybox({
+    maxWidth  : 800,
+    maxHeight : 600,
+    fitToView : false,
+    width   : '70%',
+    height    : '70%',
+    autoSize  : true,
+    closeClick  : false,
+    openEffect  : 'none',
+    closeEffect : 'none'
+  });
+})(jQuery);
+</script>
+
+</body>
+</html>
